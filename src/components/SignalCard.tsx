@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { TrendingUp, TrendingDown, Minus, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface SignalCardProps {
   symbol: string;
@@ -29,6 +30,7 @@ const SignalCard = ({
   lastUpdated,
 }: SignalCardProps) => {
   const [expanded, setExpanded] = useState(false);
+  const navigate = useNavigate();
 
   const signalColors = {
     BUY: "bg-signal-buy text-signal-buy-foreground",
@@ -44,7 +46,12 @@ const SignalCard = ({
       <div className="flex items-start justify-between mb-4">
         <div>
           <div className="flex items-baseline gap-2">
-            <h3 className="font-display text-2xl font-bold text-foreground">{symbol}</h3>
+            <h3 
+              className="font-display text-2xl font-bold text-foreground cursor-pointer hover:text-copper transition-colors"
+              onClick={() => navigate(`/stock/${symbol}`)}
+            >
+              {symbol}
+            </h3>
             <Badge variant="outline" className="text-xs font-mono text-copper border-copper/30">
               {exchange}
             </Badge>

@@ -6,10 +6,10 @@ const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { icon: TrendingUp, label: "Signals", href: "#signals" },
-    { icon: Wallet, label: "Portfolio", href: "#portfolio" },
-    { icon: BookOpen, label: "Learn", href: "#learn" },
-    { icon: Shield, label: "Compliance", href: "#compliance" },
+    { icon: TrendingUp, label: "Signals", href: "/" },
+    { icon: Wallet, label: "Portfolio", href: "/portfolio" },
+    { icon: BookOpen, label: "Paper Trading", href: "/paper-trading" },
+    { icon: Shield, label: "Compliance", href: "/compliance" },
   ];
 
   return (
