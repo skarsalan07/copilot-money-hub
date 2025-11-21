@@ -1,9 +1,42 @@
-import { TrendingUp, Wallet, BookOpen, Shield, Menu } from "lucide-react";
+import { TrendingUp, Wallet, BookOpen, Shield, Menu, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { Session } from "@supabase/supabase-js";
+import { toast } from "sonner";
 
 const Navigation = () => {
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+
+  useEffect(() => {
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast.success("Logged out successfully");
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.message || "Error logging out");
+    }
+  };
 
   const navItems = [
     { icon: TrendingUp, label: "Signals", href: "/" },
@@ -42,12 +75,21 @@ const Navigation = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" className="font-medium">
-              Sign In
-            </Button>
-            <Button className="bg-copper hover:bg-copper/90 text-copper-foreground font-medium">
-              Get Started
-            </Button>
+            {session ? (
+              <Button variant="ghost" className="font-medium" onClick={handleLogout}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Log Out
+              </Button>
+            ) : (
+              <>
+                <Button variant="ghost" className="font-medium" onClick={() => navigate("/auth")}>
+                  Sign In
+                </Button>
+                <Button className="bg-copper hover:bg-copper/90 text-copper-foreground font-medium" onClick={() => navigate("/auth")}>
+                  Get Started
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -77,12 +119,21 @@ const Navigation = () => {
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-2 border-t border-border mt-2">
-                <Button variant="ghost" className="w-full justify-start font-medium">
-                  Sign In
-                </Button>
-                <Button className="w-full bg-copper hover:bg-copper/90 text-copper-foreground font-medium">
-                  Get Started
-                </Button>
+                {session ? (
+                  <Button variant="ghost" className="w-full justify-start font-medium" onClick={handleLogout}>
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Log Out
+                  </Button>
+                ) : (
+                  <>
+                    <Button variant="ghost" className="w-full justify-start font-medium" onClick={() => navigate("/auth")}>
+                      Sign In
+                    </Button>
+                    <Button className="w-full bg-copper hover:bg-copper/90 text-copper-foreground font-medium" onClick={() => navigate("/auth")}>
+                      Get Started
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>
