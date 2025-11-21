@@ -2,8 +2,9 @@ import Navigation from "@/components/Navigation";
 import PortfolioOverview from "@/components/PortfolioOverview";
 import SignalCard from "@/components/SignalCard";
 import IntelligenceFeed from "@/components/IntelligenceFeed";
-import { Sparkles, Shield } from "lucide-react";
+import { Sparkles, Shield, PieChart, Users, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 
 const Index = () => {
   const signals = [
@@ -81,6 +82,53 @@ const Index = () => {
 
         {/* Portfolio Overview */}
         <PortfolioOverview />
+
+        {/* Features Section */}
+        <div className="mb-16">
+          <h2 className="font-display text-3xl font-bold text-foreground text-center mb-8">
+            Powerful Features for Smarter Investing
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Portfolio Feature */}
+            <Card className="p-6 border-border hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-card to-card/50">
+              <div className="w-12 h-12 rounded-lg bg-copper/10 flex items-center justify-center mb-4">
+                <PieChart className="w-6 h-6 text-copper" />
+              </div>
+              <h3 className="font-display text-xl font-bold text-foreground mb-3">
+                Portfolio Management
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Track, manage, and analyze all your investments in one place. Get AI-powered insights on your holdings, sector allocation, and personalized rebalancing suggestions to optimize your portfolio performance.
+              </p>
+            </Card>
+
+            {/* Community Insights */}
+            <Card className="p-6 border-border hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-card to-card/50">
+              <div className="w-12 h-12 rounded-lg bg-copper/10 flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-copper" />
+              </div>
+              <h3 className="font-display text-xl font-bold text-foreground mb-3">
+                Community Insights
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Access real-time sentiment analysis from millions of investors. Understand market trends, investor behavior, and crowd wisdom to make more informed decisions backed by collective intelligence.
+              </p>
+            </Card>
+
+            {/* Copy Trading */}
+            <Card className="p-6 border-border hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-card to-card/50">
+              <div className="w-12 h-12 rounded-lg bg-copper/10 flex items-center justify-center mb-4">
+                <Copy className="w-6 h-6 text-copper" />
+              </div>
+              <h3 className="font-display text-xl font-bold text-foreground mb-3">
+                Copy Trading
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                New to investing? Copy trades from experienced investors and learn as you earn. Build confidence with proven strategies while developing your own investment expertise over time.
+              </p>
+            </Card>
+          </div>
+        </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
